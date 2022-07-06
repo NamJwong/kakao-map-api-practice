@@ -13,14 +13,15 @@ interface MapProps {
 
 export default function Map({ latitude, longitude }: MapProps) {
   useEffect(() => {
-    window.kakao.maps.load(() => {
+    const { kakao } = window; // CNA에서는 useEffect 바깥에서는 window 객체를 참조할 수 없음.
+    kakao.maps.load(() => {
       const container = document.getElementById('map');
       const options = {
-        center: new window.kakao.maps.LatLng(latitude, longitude),
+        center: new kakao.maps.LatLng(latitude, longitude),
       };
-      const map = new window.kakao.maps.Map(container, options);
-      const markerPosition = new window.kakao.maps.LatLng(latitude, longitude);
-      const marker = new window.kakao.maps.Marker({
+      const map = new kakao.maps.Map(container, options);
+      const markerPosition = new kakao.maps.LatLng(latitude, longitude);
+      const marker = new kakao.maps.Marker({
         position: markerPosition,
       });
       marker.setMap(map);
